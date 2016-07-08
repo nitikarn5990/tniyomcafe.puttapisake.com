@@ -6,7 +6,7 @@
         <title></title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        
+
         <!-- Bootstrap 3.3.5 -->
         <link rel="stylesheet" href="<?= base_url() ?>assets/bootstrap/css/bootstrap.min.css">
 
@@ -62,8 +62,8 @@
         <script type="text/javascript" src="<?= base_url() ?>assets/jquery.jnotify/lib/jquery.jnotify.js"></script>
 
         <!--Chart-->
-
-
+        <link rel='stylesheet' type='text/css' media="print"  href='<?= base_url() ?>assets/print.css' />
+   
     </head>
     <body class="sidebar-mini sidebar-collapse skin-purple ">
         <?php
@@ -631,55 +631,55 @@
                     type: 'POST',
                     url: '<?= base_url('pos/do_alert') ?>',
                     success: function (val) {
-                    //  console.log(val);
+                        //  console.log(val);
                         if (val !== '') {
 
                             var data = $.parseJSON(val);
 
 
                             $.each(data, function (i, data) {
-                              //
-                             //   if (data['check_finish_from_barista'] == 'yes') {
-                                    if (data['table_or_queue'] === 'table') {
-                                        var active_order_id = data['active_order_id'];
+                                //
+                                //   if (data['check_finish_from_barista'] == 'yes') {
+                                if (data['table_or_queue'] === 'table') {
+                                    var active_order_id = data['active_order_id'];
 
-                                        li += "<li style='overflow: hidden; margin: 4px 0px; border-radius: 2px; border: 1px solid rgb(124, 221, 119); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: darkgreen; width: 310px; background-color: rgb(188, 245, 188);'>";
-                                        li += "<div class='noty_bar noty_type_success' id='noty_1111112644355350900'><div class='noty_message' id='' style='font-size: 13px; line-height: 16px; text-align: left; padding: 10px; width: auto; position: relative;'>";
-                                        li += "<span class='noty_text'>";
-                                        li += "<div><h4><i class='fa fa-check' aria-hidden='true'></i> Tables : " + data['tables_number'] + "</h4></div></span></div><div class='noty_buttons' style='padding: 5px; text-align: right; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(80, 194, 78); background-color: rgb(255, 255, 255);'>";
-                                        li += "<button class='btn btn-info' data-active-order-id=" + active_order_id + " onclick='fn_check(this)' id='button-0' style='margin-left: 0px;'>Ok</button>";
-                                        li += "</div>";
-                                        li += "</div>";
-                                        li += "</li>";
-                                        
-                                        table_or_queue = 'table';
-                                    } else {
-                                        var active_order_id = data['active_order_id'];
+                                    li += "<li style='overflow: hidden; margin: 4px 0px; border-radius: 2px; border: 1px solid rgb(124, 221, 119); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: darkgreen; width: 310px; background-color: rgb(188, 245, 188);'>";
+                                    li += "<div class='noty_bar noty_type_success' id='noty_1111112644355350900'><div class='noty_message' id='' style='font-size: 13px; line-height: 16px; text-align: left; padding: 10px; width: auto; position: relative;'>";
+                                    li += "<span class='noty_text'>";
+                                    li += "<div><h4><i class='fa fa-check' aria-hidden='true'></i> Tables : " + data['tables_number'] + "</h4></div></span></div><div class='noty_buttons' style='padding: 5px; text-align: right; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(80, 194, 78); background-color: rgb(255, 255, 255);'>";
+                                    li += "<button class='btn btn-info' data-active-order-id=" + active_order_id + " onclick='fn_check(this)' id='button-0' style='margin-left: 0px;'>Ok</button>";
+                                    li += "</div>";
+                                    li += "</div>";
+                                    li += "</li>";
 
-                                        li += "<li style='overflow: hidden; margin: 4px 0px; border-radius: 2px; border: 1px solid rgb(124, 221, 119); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: darkgreen; width: 310px; background-color: rgb(188, 245, 188);'>";
-                                        li += "<div class='noty_bar noty_type_success' id='noty_1111112644355350900'><div class='noty_message' id='' style='font-size: 13px; line-height: 16px; text-align: left; padding: 10px; width: auto; position: relative;'>";
-                                        li += "<span class='noty_text'>";
-                                        li += "<div><h4><i class='fa fa-check' aria-hidden='true'></i> Queue : #" + active_order_id + "</h4></div></span></div><div class='noty_buttons' style='padding: 5px; text-align: right; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(80, 194, 78); background-color: rgb(255, 255, 255);'>";
-                                        li += "<button class='btn btn-info' data-active-order-id=" + active_order_id + " onclick='fn_check(this)' id='button-0' style='margin-left: 0px;'>Ok</button>";
-                                        li += "</div>";
-                                        li += "</div>";
-                                        li += "</li>";
-                                        table_or_queue = 'queue';
+                                    table_or_queue = 'table';
+                                } else {
+                                    var active_order_id = data['active_order_id'];
 
-                                    }
-                               // }
+                                    li += "<li style='overflow: hidden; margin: 4px 0px; border-radius: 2px; border: 1px solid rgb(124, 221, 119); box-shadow: rgba(0, 0, 0, 0.0980392) 0px 2px 4px; color: darkgreen; width: 310px; background-color: rgb(188, 245, 188);'>";
+                                    li += "<div class='noty_bar noty_type_success' id='noty_1111112644355350900'><div class='noty_message' id='' style='font-size: 13px; line-height: 16px; text-align: left; padding: 10px; width: auto; position: relative;'>";
+                                    li += "<span class='noty_text'>";
+                                    li += "<div><h4><i class='fa fa-check' aria-hidden='true'></i> Queue : #" + active_order_id + "</h4></div></span></div><div class='noty_buttons' style='padding: 5px; text-align: right; border-top-width: 1px; border-top-style: solid; border-top-color: rgb(80, 194, 78); background-color: rgb(255, 255, 255);'>";
+                                    li += "<button class='btn btn-info' data-active-order-id=" + active_order_id + " onclick='fn_check(this)' id='button-0' style='margin-left: 0px;'>Ok</button>";
+                                    li += "</div>";
+                                    li += "</div>";
+                                    li += "</li>";
+                                    table_or_queue = 'queue';
+
+                                }
+                                // }
                             });
                             // check_finish_from_barista
-                           // if (li != '') {
-                                modal_noty(li);
-                           // }
+                            // if (li != '') {
+                            modal_noty(li);
+                            // }
 
 
 
                         } else {
                             //if (li != '') {
-                                modal_noty(li);
-                           // }
+                            modal_noty(li);
+                            // }
                         }
 
 
@@ -701,16 +701,16 @@
                 if (_position === 'ผู้ดูแลระบบ') {
                     $('#noty_finished_admin').append(li);
                 } else if (_position === 'แคชเชียร์') {
-                    
-                    if(table_or_queue == 'queue'){
-                         $('#noty_finished_cashier').append(li);
+
+                    if (table_or_queue == 'queue') {
+                        $('#noty_finished_cashier').append(li);
                     }
-                   
+
                 } else if (_position === 'พนักงานเสิร์ฟ') {
-                     if(table_or_queue == 'table'){
-                         $('#noty_finished_waiter').append(li);
+                    if (table_or_queue == 'table') {
+                        $('#noty_finished_waiter').append(li);
                     }
-                   
+
                 }
 
 
@@ -762,7 +762,7 @@
             }
 
             table {
-               // font-size: 12px !important;
+                // font-size: 12px !important;
             }
 
             #category_child:focus {

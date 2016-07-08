@@ -22,23 +22,19 @@ class Auth extends CI_Controller {
     public function __construct() {
         parent::__construct();
         // Your own constructor code
-
-        
-      
-        
     }
 
     public $data = array();
     public $template = array();
 
     public function _checkauth() {
-        
-        
+
+
 
         if (($this->session->userdata('is_logged_in') != '')) {
             if ($this->session->userdata('url_back') != '') {
-              //  redirect($this->session->userdata('url_back'));
-            } 
+                //  redirect($this->session->userdata('url_back'));
+            }
         }
     }
 
@@ -60,7 +56,7 @@ class Auth extends CI_Controller {
                 'password' => encode_login(trim($this->input->post('password'))),
             );
 
-            
+
             $condition = "username =" . "'" . $data['username'] . "' AND " . "password =" . "'" . $data['password'] . "'";
 
             $this->db->select('*');
@@ -80,30 +76,33 @@ class Auth extends CI_Controller {
                 $this->session->set_userdata('users_id', $row['id']);
                 $this->session->set_userdata('name', $row['name']);
                 $this->session->set_userdata('is_logged_in', '1');
-                
+
                 $this->session->set_userdata('group', $row['group']);
                 $this->session->set_userdata('position', $row['position']);
-                
-              //  if ($this->session->userdata('url_back') != '') {
-                 // redirect($this->session->userdata('url_back'));
-               // } else {
-              
-                 
-                    if($row['position'] == 'แคชเชียร์'){
-                           redirect('pos/tables');
-                    }
-                     if($row['position'] == 'พนักงานเสิร์ฟ'){
-                             redirect('pos/tables');
-                    }
-                     if($row['position'] == 'คนชงกาแฟ'){
-                          redirect('pos/barista');
-                   }
-                    if($row['position'] == 'ผู้ดูแลระบบ'){
-                         redirect('home');
-                    }
-                  
-                //}
 
+                //  if ($this->session->userdata('url_back') != '') {
+                // redirect($this->session->userdata('url_back'));
+                // } else {
+                $data = array('last_login' => DATE_TIME);
+                $this->db->where('id', $row['id']);
+                $this->db->update('users', $data);
+
+
+
+                if ($row['position'] == 'แคชเชียร์') {
+                    redirect('pos/tables');
+                }
+                if ($row['position'] == 'พนักงานเสิร์ฟ') {
+                    redirect('pos/tables');
+                }
+                if ($row['position'] == 'คนชงกาแฟ') {
+                    redirect('pos/barista');
+                }
+                if ($row['position'] == 'ผู้ดูแลระบบ') {
+                    redirect('home');
+                }
+
+                //}
                 //redirect($this->agent->referrer());
                 // redirect('member/add');
                 // redirect($this->session->flashdata('redirectToCurrent'));

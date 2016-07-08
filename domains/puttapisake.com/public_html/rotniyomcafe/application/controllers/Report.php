@@ -623,8 +623,6 @@ class report extends CI_Controller {
                 }
                 
                 if ($this->input->post('report_type') == 'ช่วงเวลาขายดี') {
-                   
-                        
                          
                     if ($post_report_range == 'ตามช่วงเวลา' || $post_report_range == 'ตามช่วงเดือน' || $post_report_range == 'ตามช่วงปี') {
 
@@ -815,6 +813,65 @@ class report extends CI_Controller {
                             'content' => $this->load->view('report/sales', $dataView, true),
                         );
                         $this->load->view('main_layout', $data);
+                    } else {
+                        redirect('report/sales');
+                    }
+                }
+                 if ($this->input->post('report_type') == 'หมวดหมู่ขายดี') {
+
+
+                    $this->db->select("active_order_detail.*,SUM(active_order_detail.qty * active_order_detail.price) as total_price");
+                    $this->db->select("SUM(active_order_detail.qty) as total_qty");
+                    $this->db->select("category.category_name");
+                     $this->db->select("category.id AS category_id");
+                    $this->db->select("menu.product");
+                    $this->db->from('active_order');
+                    $this->db->where('paid_date !=', '0000-00-00 00:00:00');
+                    $this->db->join('active_order_detail', 'active_order.id = active_order_detail.active_order_id');
+                    $this->db->join('menu', 'active_order_detail.menu_id = menu.id');
+                    $this->db->join('category', 'category.id = menu.category_id');
+               
+
+                    //  $this->db->join('member', 'active_rent.member_id = member.id');
+//                    $arrDate = explode(' - ', $this->input->post('reservation'));
+//                    $arrDateSt = explode('/', $arrDate[0]);
+//                    $arrDateEnd = explode('/', $arrDate[1]);
+//                    $start_date = $arrDateSt[2] . '-' . $arrDateSt[0] . '-' . $arrDateSt[1] . ' ' . ' 00:00:00';
+//                    $end_date = $arrDateEnd[2] . '-' . $arrDateEnd[0] . '-' . $arrDateEnd[1] . ' ' . ' 23:59:59';
+
+                    if (trim($start_date) != '' && trim($end_date) != '') {
+
+                        $this->db->where('active_order.created_at BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+                        // $this->db->group_by('active_order_detail.menu_id');
+                        $this->db->group_by('menu.category_id');
+
+                        $this->db->order_by('total_qty', 'DESC');
+                        $this->db->order_by('menu.product', 'ASC');
+                       // $this->db->order_by('active_order_detail.menu_type', 'ASC');
+
+                        // echo $this->db->get_compiled_select();
+                        // die();
+                        $query = $this->db->get();
+//                        echo '<pre>';
+//                         // print_r($query->result_array());
+//                        print_r($this->db->last_query());
+//                          die();
+
+                        $dataView = [
+                            'res_active_order_sales' => $query->result_array(),
+                            'type' => 'หมวดหมู่ขายดี',
+                            'res_chart' => ($query->result_array()),
+                            'duration' => $show_str_date,
+                            'report_range' => $post_report_range
+                                //'result_active_payment' => $result_active_payment
+                        ];
+
+                        $data = array(
+                            'content' => $this->load->view('report/sales', $dataView, true),
+                        );
+                        
+                        $this->load->view('main_layout', $data);
+                        
                     } else {
                         redirect('report/sales');
                     }
